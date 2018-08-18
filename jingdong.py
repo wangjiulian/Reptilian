@@ -63,7 +63,7 @@ class JD_crawl:
         }
         try:
             login_page = self.session.post(self.post_url, data = data, headers = headers)
-            print(login_page)
+            print(login_page.content)
         except Exception as e:
             print(e)
 

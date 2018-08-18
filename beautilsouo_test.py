@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import bs4
 
 html_doc = """
 
@@ -18,10 +19,20 @@ and they lived at the bottom of a well.</p>
 
 """
 
-soup = BeautifulSoup(html_doc,'html.parser')
+# soup = BeautifulSoup(html_doc,'html.parser')
 # soup = BeautifulSoup(open('index.html'))
 
+# soup = BeautifulSoup('<b class="boldest">Extremely bold</b>','html.parser')
+#
+# tag = soup.b
+# tag.string.replace_with('21121')
+# print(tag.string)
 
+markup = '<b><!--Hey, buddy. Want to buy a used parser?--></b>'
+soup = BeautifulSoup(markup,'html.parser')
+comment = soup.b.string
+if type(soup.b.string) == bs4.element.Comment:
+    print(soup.b.string)
 
 
 

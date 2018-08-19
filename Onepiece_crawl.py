@@ -39,8 +39,9 @@ class OnePiece(object):
                     print('第' + str(num) + '页:-----第' + str(counter + 1)
                           +'个链接：' + href_list[0] + '------')
                     self.q.put(href_list[0])
+                    sleep(random.randint(2,3))
 
-        except requests.ConnectionError:
+        except:
             pass
 
     def picture_parse(self):
@@ -63,43 +64,46 @@ class OnePiece(object):
                 for page in range(1, int(total_page) + 1):
                     sub_url_new = sub_url_base + '_' + str(page) + '.shtml'
                     self.picture_link_add(sub_url_new)
-        except requests.ConnectionError:
-            pass
+                    sleep(random.randint(2, 3))
         except:
-            print('错误--'+sub_url)
             pass
+
 
     def picture_link_add(self,sub_url_new):
-        html2 = requests.get(sub_url_new)
-        if html2.status_code == 200:
-            soup = BeautifulSoup(html2.content, 'lxml')
-            div_tag = soup.find_all('div', id='pictureContent');
-            soup1 = BeautifulSoup(str(div_tag[0]), 'lxml')
-            for img_tag in soup1.find_all('img', src=re.compile('(.+?)')):
-                soup3 = BeautifulSoup(str(img_tag), 'lxml')
-                if soup3.img['src'] is not None:
-                    self.picture_link.append(soup3.img['src'])
-                    print(str('-----' + soup3.img['alt'] + '链接：') + str(soup3.img['src'] + '----'))
+        try:
+            html2 = requests.get(sub_url_new)
+            if html2.status_code == 200:
+                soup = BeautifulSoup(html2.content, 'lxml')
+                div_tag = soup.find_all('div', id='pictureContent');
+                soup1 = BeautifulSoup(str(div_tag[0]), 'lxml')
+                for img_tag in soup1.find_all('img', src=re.compile('(.+?)')):
+                    soup3 = BeautifulSoup(str(img_tag), 'lxml')
+                    if soup3.img['src'] is not None:
+                        self.picture_link.append(soup3.img['src'])
+                        print(str('-----' + soup3.img['alt'] + '链接：') + str(soup3.img['src'] + '----'))
+                        sleep(random.randint(2, 3))
 
 
-        else:
+            else:
+                pass
+        except:
             pass
 
 
     def picture_store(self,num):
 
         try:
-
-                html3 = requests.get(self.picture_link[num])
+            for couter, link in enumerate(self.picture_link):
+                html3 = requests.get(link)
                 picture_path = '/Work/Python3/onepiec_picture/pic'+str(num + 1) +'.jpg'
                 with open(picture_path,'wb') as f:
                     f.write(html3.content)
-                print('图片:'+self.picture_link[num]+'下载成功-----')
-        except requests.ConnectionError:
+                print('图片:'+link + '下载成功-----')
+        except :
             pass
 
     def main(self):
-        page_num = 2
+        page_num = 6
         thread_0 = []
         for i in range(1,page_num):
             t = Thread(target=self.html_parse,args=(i,), name='Thread-0')
@@ -125,16 +129,17 @@ class OnePiece(object):
             thread_1[i].join()
 
 
-        thread_2 = []
-        for num in range(len(self.picture_link)):
-            t2 = Thread(target=self.picture_store, args=(num,), name='Thread-2')
-            thread_2.append(t2)
+        # thread_2 = []
+        # for num in range(len(self.picture_link)):
+        #     t2 = Thread(target=self.picture_store, args=(num,), name='Thread-2')
+        #     thread_2.append(t2)
+        #
+        # for i in range(len(thread_2)):
+        #     thread_2[i].start()
+        #
+        # for i in range(len(thread_2)):
+        #     thread_2[i].join()
 
-        for i in range(len(thread_2)):
-            thread_2[i].start()
-
-        for i in range(len(thread_2)):
-            thread_2[i].join()
 
 
 if __name__ == '__main__':

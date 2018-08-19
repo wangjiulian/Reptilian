@@ -103,7 +103,7 @@ class OnePiece(object):
             pass
 
     def main(self):
-        page_num = 6
+        page_num = 2
         thread_0 = []
         for i in range(1,page_num):
             t = Thread(target=self.html_parse,args=(i,), name='Thread-0')

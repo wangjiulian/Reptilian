@@ -90,12 +90,12 @@ class OnePiece(object):
             pass
 
 
-    def picture_store(self,num):
+    def picture_store(self):
 
         try:
             for couter, link in enumerate(self.picture_link):
                 html3 = requests.get(link)
-                picture_path = '/Work/Python3/onepiec_picture/pic'+str(num + 1) +'.jpg'
+                picture_path = '/Work/Python3/onepiec_picture/pic'+str(couter + 1) +'.jpg'
                 with open(picture_path,'wb') as f:
                     f.write(html3.content)
                 print('图片:'+link + '下载成功-----')

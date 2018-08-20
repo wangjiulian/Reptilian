@@ -95,7 +95,7 @@ class OnePiece(object):
         try:
             for couter, link in enumerate(self.picture_link):
                 html3 = requests.get(link)
-                picture_path = '/Work/Python3/onepiec_picture/pic'+str(couter + 1) +'.jpg'
+                picture_path = '/Work/Python/onepiec_picture/pic'+str(couter + 1) +'.jpg'
                 with open(picture_path,'wb') as f:
                     f.write(html3.content)
                 print('图片:'+link + '下载成功-----')
@@ -103,7 +103,7 @@ class OnePiece(object):
             pass
 
     def main(self):
-        page_num = 25
+        page_num = 2
         thread_0 = []
         for i in range(1,page_num):
             t = Thread(target=self.html_parse,args=(i,), name='Thread-0')

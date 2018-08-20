@@ -40,6 +40,8 @@ class OnePiece(object):
                           +'个链接：' + href_list[0] + '------')
                     self.q.put(href_list[0])
                     sleep(random.randint(2,3))
+                    if self.q.qsize() == 4:
+                        break
 
         except:
             pass
@@ -126,6 +128,7 @@ class OnePiece(object):
             thread_1[i].start()
 
         for i in range(len(thread_1)):
+            print('thread---' + str(i) +'开始')
             thread_1[i].join()
 
         self.picture_store()

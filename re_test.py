@@ -1,10 +1,10 @@
 import re
-dir(re)
+# dir(re)
 
-s1 = '我12345abcde'
-# s2 = '.12345abcde'
-# s2 = '+?!@12345abcde'
-s2 = '+?!@12345abcde@786ty'
+# s1 = '我12345abcde'
+# # s2 = '.12345abcde'
+# # s2 = '+?!@12345abcde'
+# s2 = '+?!@12345abcde@786ty'
 #pattern字符串前加 'r' 表示原生字符串
 # pattern = r'\w.+'
 # #编译pattern
@@ -17,6 +17,17 @@ s2 = '+?!@12345abcde@786ty'
 
 # print(result1)
 # print(result2)
+
+s1 = '我12345abcde'
+s2 = '+?!@12345abcdaaaaa'
+pattern = r'\w.+'
+pattern_compile = re.compile(pattern)
+result1 = re.search(pattern_compile,s1)
+result2 = re.search(pattern_compile,s2)
+print(result1)
+print(result2)
+
+
 
 
 
@@ -50,12 +61,12 @@ s2 = '+?!@12345abcde@786ty'
 # print(result4)
 
 
-s1 = '我12345+aBCde'
-# pattern字符串前加 “ r ” 表示原生字符串
-pattern = r'(\w+)\+(\w+)'
-# 返回一个匹配的列表
-result1 = re.findall(pattern, s1, re.IGNORECASE)
-print(result1)
+# s1 = '我12345+aBCde'
+# # pattern字符串前加 “ r ” 表示原生字符串
+# pattern = r'(\w+)\+(\w+)'
+# # 返回一个匹配的列表
+# result1 = re.findall(pattern, s1, re.IGNORECASE)
+# print(result1)
 
 
 
